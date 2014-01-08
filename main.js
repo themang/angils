@@ -13,4 +13,4 @@ angular.module('angils', [])
     });
     return promise;
   }
-}])`;
+}]);
