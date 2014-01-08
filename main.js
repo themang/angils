@@ -2,16 +2,16 @@
 angular.module('angils', [])
 .factory('promiseStatus', ['$q', function($q) {
   return function(promise) {
-    var tracker = promise.then(function(value) {
-      tracker.success = true;
+    promise.then(function(value) {
+      promise.success = true;
+      promise.loading = false;
     }, function(err) {
-      tracker.error = err;
+      promise.error = err;
+      promise.loading = false;
     }, function(progress) {
-      tracker.progress = progress;
-    })['finally'](function() {
-      tracker.loading = false;
+      promise.progress = progress;
+      promise.loading = false;
     });
-    tracker.loading = true;
-    return tracker
+    return promise;
   }
-}]);
+}])`;
