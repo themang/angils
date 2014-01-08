@@ -10,7 +10,6 @@ angular.module('angils', [])
       promise.loading = false;
     }, function(progress) {
       promise.progress = progress;
-      promise.loading = false;
     });
     return promise;
   }
