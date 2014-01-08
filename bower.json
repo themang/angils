@@ -1,0 +1,25 @@
+{
+  "name": "angils",
+  "version": "0.0.0",
+  "authors": [
+    "Josh Taylor <joshrtay@gmail.com>"
+  ],
+  "description": "angular utils",
+  "main": "main.js",
+  "keywords": [
+    "angular",
+    "utils"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/themang/angils",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.7"
+  }
+}
