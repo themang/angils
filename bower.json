@@ -5,7 +5,7 @@
     "Josh Taylor <joshrtay@gmail.com>"
   ],
   "description": "angular utils",
-  "main": "main.js",
+  "main": "angils.js",
   "keywords": [
     "angular",
     "utils"
