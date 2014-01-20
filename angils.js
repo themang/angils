@@ -66,25 +66,4 @@ angular.module('angils', [])
     promise.status = 'loading';
     return promise;
   }
-}])
-.directive('asyncSubmit', ['$location', '$parse', 'promiseStatus',
-function($location, $parse, promiseStatus) {
-  return {
-    controller: function() {
-
-    },
-    link: function(scope, element, attrs, ctrl) {
-      if(attrs.asyncSubmitCtrl) {
-        scope[attrs.asyncSubmitCtrl] = ctrl;
-      }
-
-      var fn = $parse(attrs.asyncSubmit);
-      element.bind('submit', scope.$applied(function() {
-        ctrl.promise = promiseStatus(fn(scope));
-        ctrl.promise && ctrl.promise.then(function() {
-          $location.url(attrs.asyncAction);
-        });
-      }));
-    }
-  };
 }]);
