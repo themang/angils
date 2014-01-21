@@ -66,4 +66,38 @@ angular.module('angils', [])
     promise.status = 'loading';
     return promise;
   }
-}]);
+}])
+.directive('debouncedChange', ['$parse', function($parse) {
+  return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, ctrl) {
+        ctrl.$viewChangeListeners.push(_.debounce(function() {
+          scope.$eval(attrs.debouncedChange);
+        }, 500));
+      }
+    }; 
+}])
+.directive('throttledChange', ['$parse', function($parse) {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ctrl) {
+      ctrl.$viewChangeListeners.push(_.throttle(function() {
+        scope.$eval(attrs.throttledChange);
+      }, 500));
+    }
+  };
+}])
+.directive('viewTrigger', function() {
+  return {
+    require: ['ngModel', '^form'],
+    link: function(scope, element, attrs, ctrls) {
+      var targets = attrs.viewTrigger.split(',');
+      ctrls[0].$viewChangeListeners.push(function() {
+        _.each(targets, function(target) {
+          var ctrl = ctrls[1][target];
+          ctrl && ctrl.$setViewValue(ctrl.$viewValue);
+        });
+      });
+    }
+  };
+});
