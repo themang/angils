@@ -22,5 +22,10 @@
   },
   "dependencies": {
     "debowerify": "~0.5.2"
+  },
+  "browserify": {
+    "transform": [
+      "debowerify"
+    ]
   }
 }
