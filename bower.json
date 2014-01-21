@@ -20,6 +20,13 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.7"
+    "angular": "~1.2.7",
+    "debowerify": "~0.5.1"
+  },
+  "browserify": {
+    "transform": [
+      "debowerify"
+    ]
   }
+
 }

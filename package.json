@@ -19,5 +19,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/themang/angils/issues"
+  },
+  "dependencies": {
+    "debowerify": "~0.5.2"
   }
 }
