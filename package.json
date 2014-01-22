@@ -1,6 +1,6 @@
 {
   "name": "angils",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "angular utilities",
   "main": "angils.js",
   "scripts": {
