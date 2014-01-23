@@ -1,5 +1,7 @@
 var _ = require('lodash');
 
+require('./jquery.selector.focusable.js');
+
 angular.module('angils', [])
 .config(['$provide', function($provide) {
   $provide.decorator('$rootScope', ['$delegate', '$injector',
@@ -115,33 +117,33 @@ function($parse, focusableDirective) {
     focusableDirective[0].link(scope, element, attrs);
 
     var fn = $parse(attrs.ngFocusLost);
-    scope.$bind(element, 'focusout', function(e) {
+    element.bind('focusout', scope.$applied(function(e) {
       if(! element.has(e.relatedTarget).length)
         fn(scope);
-    });
+    }));
   };
 }])
 .directive('ngFocusIn', ['focusableDirective', function(focusableDirective) {
   return function(scope, element, attrs) {
     focusableDirective[0].link(scope, element, attrs);
-    scope.$bind(element, 'focusin', attrs.ngFocusIn);
+    element.bind('focusin', scope.$applied(attrs.ngFocusIn));
   };
 }])
 .directive('ngFocusOut', ['focusableDirective', function(focusableDirective) {
   return function(scope, element, attrs) {
     focusableDirective[0].link(scope, element, attrs);
-    scope.$bind(element, 'focusout', attrs.ngFocusOut);
+    element.bind('focusout', scope.$applied(attrs.ngFocusOut));
   };
 }])
 .directive('ngFocus', ['focusableDirective', function(focusableDirective) {
   return function(scope, element, attrs) {
     focusableDirective[0].link(scope, element, attrs);
-    scope.$bind(element, 'focus', attrs.ngFocus);
+    element.bind('focus', scope.$applied(attrs.ngFocus));
   };
 }])
 .directive('ngBlur', ['focusableDirective', function(focusableDirective) {
   return function(scope, element, attrs) {
     focusableDirective[0].link(scope, element, attrs);
-    scope.$bind(element, 'blur', attrs.ngBlur);
+    element.bind('blur', scope.$applied(attrs.ngBlur));
   };
 }]);
