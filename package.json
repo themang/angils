@@ -1,0 +1,31 @@
+{
+  "name": "angils",
+  "version": "0.0.7",
+  "description": "angular utilities",
+  "main": "angils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/themang/angils.git"
+  },
+  "keywords": [
+    "angular",
+    "utils",
+    "utilities"
+  ],
+  "author": "joshrtay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/themang/angils/issues"
+  },
+  "dependencies": {
+    "debowerify": "~0.5.2"
+  },
+  "browserify": {
+    "transform": [
+      "debowerify"
+    ]
+  }
+}

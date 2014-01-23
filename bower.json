@@ -21,6 +21,13 @@
   ],
   "dependencies": {
     "angular": "~1.2.7",
-    "jquery": "*"
+    "jquery": "*",
+    "debowerify": "~0.5.1"
+  },
+  "browserify": {
+    "transform": [
+      "debowerify"
+    ]
   }
+
 }
