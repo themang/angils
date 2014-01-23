@@ -100,4 +100,48 @@ angular.module('angils', [])
       });
     }
   };
-});
+})
+.directive('focusable', function() {
+  return {
+    link: function(scope, element, attrs) {
+      if(! element.is(':focusable') && ! _.has(attrs, 'tabindex'))
+        element.attr('tabindex', -1);
+    }
+  };
+})
+.directive('ngFocusLost', ['$parse', 'focusableDirective',
+function($parse, focusableDirective) {
+  return function(scope, element, attrs) {
+    focusableDirective[0].link(scope, element, attrs);
+
+    var fn = $parse(attrs.ngFocusLost);
+    scope.$bind(element, 'focusout', function(e) {
+      if(! element.has(e.relatedTarget).length)
+        fn(scope);
+    });
+  };
+}])
+.directive('ngFocusIn', ['focusableDirective', function(focusableDirective) {
+  return function(scope, element, attrs) {
+    focusableDirective[0].link(scope, element, attrs);
+    scope.$bind(element, 'focusin', attrs.ngFocusIn);
+  };
+}])
+.directive('ngFocusOut', ['focusableDirective', function(focusableDirective) {
+  return function(scope, element, attrs) {
+    focusableDirective[0].link(scope, element, attrs);
+    scope.$bind(element, 'focusout', attrs.ngFocusOut);
+  };
+}])
+.directive('ngFocus', ['focusableDirective', function(focusableDirective) {
+  return function(scope, element, attrs) {
+    focusableDirective[0].link(scope, element, attrs);
+    scope.$bind(element, 'focus', attrs.ngFocus);
+  };
+}])
+.directive('ngBlur', ['focusableDirective', function(focusableDirective) {
+  return function(scope, element, attrs) {
+    focusableDirective[0].link(scope, element, attrs);
+    scope.$bind(element, 'blur', attrs.ngBlur);
+  };
+}]);
