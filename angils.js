@@ -144,4 +144,5 @@ function($parse, focusableDirective) {
     focusableDirective[0].link(scope, element, attrs);
     scope.$bind(element, 'blur', attrs.ngBlur);
   };
-}]);
+}])
+.directive('')
