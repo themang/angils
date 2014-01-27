@@ -147,4 +147,19 @@ function($parse, focusableDirective) {
     element.bind('blur', scope.$applied(attrs.ngBlur));
   };
 }])
-.directive('')
+.directive('dirtyOnSubmit', [function() {
+  return {
+    require: 'form',
+    link: function(scope, element, attrs, ctrl) {
+      element.bind('submit', scope.$applied(function() {
+        var fieldControls = _.filter(ctrl, function(fCtrl, name) {
+          return _.has(fCtrl, '$viewValue') && _.has(fCtrl, '$modelValue');
+        });
+        console.log('submit');
+        _.each(fieldControls, function(fCtrl) {
+          fCtrl.$setViewValue(fCtrl.$viewValue);
+        });
+      }));
+    }
+  }
+}]);
