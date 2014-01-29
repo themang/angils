@@ -97,8 +97,8 @@ angular.module('angils', [])
       ctrls[0].$viewChangeListeners.push(function() {
         _.each(targets, function(target) {
           var ctrl = ctrls[1][target];
-          var viewValue = (_.isNull(ctrl.$viewValue) || _.isUndefined(ctrl.$viewValue)) ? '' : ctrl.$viewValue;
-          ctrl && ctrl.$setViewValue(viewValue);
+          if (ctrl && ctrl.$dirty)
+              ctrl.$setViewValue(ctrl.$viewValue);
         });
       });
     }
