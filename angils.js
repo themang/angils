@@ -97,7 +97,7 @@ angular.module('angils', [])
       ctrls[0].$viewChangeListeners.push(function() {
         _.each(targets, function(target) {
           var ctrl = ctrls[1][target];
-          ctrl && ctrl.$setViewValue(ctrl.$viewValue);
+          ctrl && ctrl.$setViewValue(ctrl.$viewValue === null ? '' : ctrl.$viewValue);
         });
       });
     }
