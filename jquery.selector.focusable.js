@@ -5,7 +5,7 @@
       return $.css(this, 'visibility') === 'hidden';
     }).length;
   }
- 
+
   function focusable(element, isTabIndexNotNaN) {
     var map, mapName, img, nodeName = element.nodeName.toLowerCase();
     if ('area' === nodeName) {
@@ -25,7 +25,7 @@
       // the element and all of its ancestors must be visible
       visible(element);
   }
- 
+
   $.extend($.expr[':'], {
     focusable: function(element) {
       return focusable(element, !isNaN($.attr(element, 'tabindex')));

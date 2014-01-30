@@ -77,7 +77,7 @@ angular.module('angils', [])
           scope.$eval(attrs.debouncedChange);
         }, 500));
       }
-    }; 
+    };
 }])
 .directive('throttledChange', ['$parse', function($parse) {
   return {
@@ -146,4 +146,35 @@ function($parse, focusableDirective) {
     focusableDirective[0].link(scope, element, attrs);
     element.bind('blur', scope.$applied(attrs.ngBlur));
   };
-}]);
+}])
+.directive('errorList', function() {
+  return {
+    scope: true,
+    require: '^form',
+    link: function(scope, element, attrs, form) {
+      if(! attrs.errorListCtrl)
+        throw new Error('error-list directive requires error-list-ctrl property to be set');
+
+      var errorList = scope.$eval(attrs.errorList)
+        , inputCtrl = form[attrs.errorListCtrl];
+
+      var setValidity = inputCtrl.$setValidity;
+      inputCtrl.$setValidity = function(validationErrorKey, isValid) {
+        var ret = setValidity.apply(this, arguments);
+        if(inputCtrl.$invalid) {
+          var error = _.find(errorList, function(errorItem) {
+            var keys = _.keys(errorItem);
+            if(keys.length > 1)
+              throw new Error('errorItems cannot have multiple keys');
+            return inputCtrl.$error[keys[0]];
+          });
+
+          scope.message = error
+            ? _.values(error)[0]
+            : '';
+        }
+        return ret;
+      };
+    }
+  };
+});
