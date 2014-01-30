@@ -158,8 +158,9 @@ function($parse, focusableDirective) {
         });
         console.log('submit');
         _.each(fieldControls, function(fCtrl) {
-          fCtrl.$setViewValue(fCtrl.$viewValue);
+          fCtrl.$dirty = true;
         });
+        ctrl.$setDirty();
       }));
     }
   }
