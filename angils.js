@@ -159,9 +159,7 @@ function($parse, focusableDirective) {
       var errorList = scope.$eval(attrs.errorList)
         , inputCtrl = form[attrs.errorListCtrl];
 
-      var setValidity = inputCtrl.$setValidity;
-      inputCtrl.$setValidity = function(validationErrorKey, isValid) {
-        var ret = setValidity.apply(this, arguments);
+      function updateMessage() {
         if(inputCtrl.$invalid) {
           var error = _.find(errorList, function(errorItem) {
             var keys = _.keys(errorItem);
@@ -169,11 +167,17 @@ function($parse, focusableDirective) {
               throw new Error('errorItems cannot have multiple keys');
             return inputCtrl.$error[keys[0]];
           });
-
           scope.message = error
             ? _.values(error)[0]
             : '';
         }
+      }
+
+      updateMessage();
+      var setValidity = inputCtrl.$setValidity;
+      inputCtrl.$setValidity = function(validationErrorKey, isValid) {
+        var ret = setValidity.apply(this, arguments);
+        updateMessage();
         return ret;
       };
     }
