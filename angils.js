@@ -97,7 +97,8 @@ angular.module('angils', [])
       ctrls[0].$viewChangeListeners.push(function() {
         _.each(targets, function(target) {
           var ctrl = ctrls[1][target];
-          ctrl && ctrl.$setViewValue(ctrl.$viewValue);
+          if (ctrl && ctrl.$dirty)
+              ctrl.$setViewValue(ctrl.$viewValue);
         });
       });
     }
@@ -177,4 +178,21 @@ function($parse, focusableDirective) {
       };
     }
   };
-});
+})
+.directive('dirtyOnSubmit', [function() {
+  return {
+    require: 'form',
+    link: function(scope, element, attrs, ctrl) {
+      element.bind('submit', scope.$applied(function() {
+        var fieldControls = _.filter(ctrl, function(fCtrl, name) {
+          return _.has(fCtrl, '$viewValue') && _.has(fCtrl, '$modelValue');
+        });
+        console.log('submit');
+        _.each(fieldControls, function(fCtrl) {
+          fCtrl.$dirty = true;
+        });
+        ctrl.$setDirty();
+      }));
+    }
+  }
+}]);
