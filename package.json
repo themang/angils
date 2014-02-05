@@ -21,7 +21,8 @@
     "url": "https://github.com/themang/angils/issues"
   },
   "dependencies": {
-    "debowerify": "~0.5.2"
+    "debowerify": "~0.5.2",
+    "moment": "~2.5.1"
   },
   "browserify": {
     "transform": [

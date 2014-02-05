@@ -199,4 +199,29 @@ function($parse, focusableDirective) {
       }));
     }
   }
+}])
+.directive('isScrolled', ['$parse', function($parse) {
+  return function(scope, element, attrs) {
+    var fn = $parse(attrs.isScrolled)
+      , dist = parseInt(attrs.distance, 10) || 0;
+
+    fn.assign(scope, element[0].scrollTop > dist);
+
+    element.on('scroll', function(e) {
+      var scrolled = e.currentTarget.scrollTop > dist;
+      if(scrolled !== !! fn(scope)) {
+        scope.$apply(function() {
+          fn.assign(scope, scrolled);
+        });
+      }
+    });
+
+  };
+}])
+.filter('fromNow', [function() {
+  var moment = require('moment');
+  return function(time, noSuffix) {
+    var m = moment(time).fromNow(noSuffix);
+    return m === 'a few seconds ago' ? 'just now' : m;
+  };
 }]);
