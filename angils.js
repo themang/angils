@@ -37,7 +37,9 @@ angular.module('angils', [])
           ? this.$apply(expr)
           : this.$eval(expr);
       },
-      $safeDigest: digestNow,
+      $safeDigest: function() {
+        safe() && this.$digest();
+      },
       $when: function(expr, fn) {
         var handle = this.$watch(expr, function(val) {
           if(!! val) {
@@ -229,10 +231,3 @@ function($parse, focusableDirective) {
 
   };
 }])
-.filter('fromNow', [function() {
-  var moment = require('moment');
-  return function(time, noSuffix) {
-    var m = moment(time).fromNow(noSuffix);
-    return m === 'a few seconds ago' ? 'just now' : m;
-  };
-}]);
