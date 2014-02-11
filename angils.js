@@ -199,4 +199,15 @@ function($parse, focusableDirective) {
       }));
     }
   }
-}]);
+}])
+.directive('bgImg', function() {
+  return {
+    restrict: 'A',
+    priority: 99,
+    link: function(scope, element, attrs) {
+      scope.$watch(attrs.bgImg, function(value) {
+        value && element.css('background-image', 'url('+value+')');
+      });
+    }
+  };
+});
